@@ -15,6 +15,12 @@ The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve
 ![Demo](demo.gif)
 ---
 
+## Why this exists?
+A common pain point for developers — including myself — is writing clear, professional README.md files. I have often found it frustrating to organize my own notes and documentation effectively. While tools like ChatGPT and GitHub Copilot are incredibly helpful for improving clarity and tone, I am cautious about using them for private repositories since they involve copy-pasting sensitive content into cloud-based platforms.
+
+That’s why I built `readme_consultant` — a local LLM-powered tool that improves your README without ever sending data over the internet. It combines the power of language models with the privacy of offline tools.
+
+
 ## Features
 
 - Reviews your `README.md` and gives structured feedback.
