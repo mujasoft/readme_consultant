@@ -247,7 +247,7 @@ def extract_changes_made_block(text: str) -> list:
     """
 
     pattern = r"```json\n(.*?)```"
-    matches = re.findall(pattern, text)
+    matches = re.findall(pattern, text, re.DOTALL)
     block = matches[-1].strip() if matches else ""
 
     data = json.loads(block)
@@ -308,10 +308,11 @@ Please do the following:
     results = send_prompt_to_LLM(prompt)
 
     console.print(Panel.fit(f"{results}",
-                            title=f"Readme Review for \"{repo}\"",
-                            subtitle="LLM Powered Improvements by "
-                                     f"\"{model}\"",
-                            style="cyan")
+                            title="[bold cyan]Changes Made for"
+                                  f" \"{repo}\"[/]",
+                            subtitle="[cyan]LLM Powered Improvements by"
+                                     f" \"{model}\"[/]",
+                            style="green")
                   )
 
     # Start writing results to file.
@@ -322,7 +323,7 @@ Please do the following:
         f.write(results)
 
     print()
-    console.print("[bold yellow]WARNING: LLMs can make subtle mistakes.[/]")
+    console.print("[bold yellow]WARNING: LLMs can still make mistakes[/]")
 
 
 @app.command()
@@ -358,6 +359,16 @@ Requirements:
 - Do not remove any existing GIFs, demo sections, or badge links.
 - Return the **entire updated README** in valid Markdown.
 - Be verbose and explain in reasonable detail.
+
+Format your response as:
+
+```markdown
+# README
+
+<Improved README content here>
+
+```
+
 At the end, include a JSON block exactly like this:
 
 ```json
@@ -368,16 +379,6 @@ At the end, include a JSON block exactly like this:
     "Added demo screenshot to Features section"
   ]
 }}
-```
-
-Format your response as:
-
-```markdown
-# README
-
-<Improved README content here>
-
-<changes made json>
 ```
 
 This will allow me to extract the README and track improvements separately.
@@ -408,11 +409,11 @@ you to get metadata. Please don't print it out to console.
     print()
     console.print(
                   Panel.fit(f"{pretty_changes}",
-                            title="[bold green]Changes Made for"
+                            title="[bold cyan]Changes Made for"
                                   f" \"{repo}\"[/]",
-                            subtitle="[green]LLM Powered Improvements by"
+                            subtitle="[cyan]LLM Powered Improvements by"
                                      f" \"{model}\"[/]",
-                            style="cyan")
+                            style="green")
                  )
 
     # Start writing results to file.
