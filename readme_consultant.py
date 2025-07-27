@@ -280,7 +280,7 @@ def review(repo_dir: str = typer.Option(None, "--repo-dir", "-r",
     folder_tree = get_folder_structure(repo_dir)
 
     prompt = f"""
-You are an expert in open source doucmentation. You are going to review my
+You are an expert in open source documentation. You are going to review my
 README.md file. Give me the report in a text block. I intend to show this
 report to my client.
 
@@ -397,8 +397,7 @@ The .git/config file looks like:
 ____
 {git_config_info}
 ____
-You don't have to do anything aobut git_config or folder_tree. Its there for
-you to get metadata. Please don't print it out to console.
+Do not print git config info.
 """
 
     results = send_prompt_to_LLM(prompt)
