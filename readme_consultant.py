@@ -400,7 +400,7 @@ At the end, include the JSON block inside a triple backtick block labeled json:
 }}
 
 This will allow me to extract the README and track improvements separately.
-
+You CANNOT forget the json block.
 
 The repo folder Tree:
 ----
