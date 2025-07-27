@@ -97,7 +97,7 @@ Generate enhanced readme
 
 Review your readme
 ```text
-╭───────────────────────────── Review for "memory_pool_simulator" ──────────────────────────────╮
+╭───────────────────────────── Review for "memory_pool_simulator" ────────────────────────────────────╮
 │ **README.md Review Report**                                                                         │
 │                                                                                                     │
 │ **Overall Assessment:**                                                                             │
