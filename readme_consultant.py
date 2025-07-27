@@ -247,16 +247,20 @@ def extract_changes_made_block(text: str) -> list:
         text (str): output from LLM.
 
     Returns:
+        bool: True if match found otherwise false.
         list: Changes made by LLM.
     """
 
     pattern = r"```json\n(.*?)```"
     matches = re.findall(pattern, text, re.DOTALL)
+
+    if len(matches) == 0:
+        return False, []
     block = matches[-1].strip() if matches else ""
 
     data = json.loads(block)
 
-    return data['changes_made']
+    return True, data['changes_made']
 
 
 def validate_setup(repo_dir):
@@ -418,9 +422,18 @@ ____
 Do not print git config info.
 """
 
-    results = send_prompt_to_LLM(prompt, model)
-    readme_contents = extract_markdown_block(results)
-    changes_made = extract_changes_made_block(results)
+    # AI an hallucinate and act unpredictably so try multiple times.
+    no_of_attempts = 3
+    for x in range(no_of_attempts):
+        results = send_prompt_to_LLM(prompt, model)
+        readme_contents = extract_markdown_block(results)
+        got_match, changes_made = extract_changes_made_block(results)
+
+        if got_match:
+            break
+
+    if not got_match:
+        sys.exit("ERROR: Could not extract \"changes made\" from LLM.")
 
     pretty_changes = "\n".join(f"• {item}" for item in changes_made)
     print()
