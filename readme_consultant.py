@@ -255,6 +255,23 @@ def extract_changes_made_block(text: str) -> list:
     return data['changes_made']
 
 
+def validate_setup(repo_dir):
+    """Fail if repo_dir doesn't exist or README.md is not there".
+
+    Args:
+        repo_dir (str): location of repo.
+    """
+
+    if repo_dir is None:
+        sys.exit("You must specify a repo directory.")
+
+    if not os.path.exists(repo_dir):
+        sys.exit(f"\"{repo_dir}\"does not exist.")
+
+    if not os.path.exists(os.path.join(repo_dir, "README.md")):
+        sys.exit("Please ensure there is a README.md in your repo.")
+
+
 @app.command()
 def review(repo_dir: str = typer.Option(None, "--repo-dir", "-r",
                                         help="Location of where the"
@@ -267,8 +284,7 @@ def review(repo_dir: str = typer.Option(None, "--repo-dir", "-r",
            ):
     """Goes through your README.md and provides feedback."""
 
-    if repo_dir is None:
-        sys.exit("You must specify a repo directory.")
+    validate_setup(repo_dir)
 
     if ".txt" not in output:
         output = os.path.join(output, ".txt")
@@ -337,8 +353,7 @@ def generate_enhanced_readme(
                              ):
     """Uses LLM to generate an improved README file."""
 
-    if repo_dir is None:
-        sys.exit("You must specify a repo directory.")
+    validate_setup(repo_dir)
 
     if ".md" not in output:
         output = os.path.join(output, ".md")
