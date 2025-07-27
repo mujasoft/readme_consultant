@@ -109,5 +109,5 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## Want to Help?
 
-Pull requests, feedback, and stars welcome!
-Or use it in your own GitHub projects and generate better READMEs with zero effort ✨
+Pull requests, feedback and stars welcome!
+Or use it in your own GitHub projects and generate better READMEs with zero effort.
