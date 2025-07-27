@@ -22,23 +22,25 @@
 
 
 import configparser
-import hashlib
+import json
 import os
 import re
 import sys
 from pathlib import Path
-import json
 
-import ollama
 import requests
 import typer
+
+import ollama
 
 from rich import print
 from rich.console import Console
 from rich.panel import Panel
 
+
 app = typer.Typer(
-    help="Ai powered ruby formula generator from a clone repo."
+    help="AI powered tool to review and enhance READMEs for better"
+         " communication."
 )
 
 console = Console()
@@ -197,23 +199,22 @@ def send_prompt_to_LLM(prompt: str, model: str = "llama3") -> str:
         )
     return response['message']['content']
 
+
 def extract_json_block(text: str) -> dict:
-    """
-    Extracts the first JSON code block from a string and returns it as a Python dictionary.
-    """
+    """Extracts last JSON code block from a string and returns it as a dict."""
     pattern = r"```json\s*({.*?})\s*```"
     match = re.search(pattern, text, re.DOTALL)
-    
+
     if not match:
         raise ValueError("No valid JSON block found in the input.")
 
     json_str = match.group(1)
-    
+
     try:
         return json.loads(json_str)
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON content: {e}")
-    
+
 
 def get_real_path(filepath: str) -> str:
     """Return real path from a given path
@@ -240,23 +241,22 @@ def extract_markdown_block(text: str) -> str:
 
 def extract_changes_made_block(text: str) -> list:
     """
-    Extracts the first markdown code block from a string.
+    Extracts the first changes made from a string.
 
     Returns the markdown code as a string.
     """
+
     pattern = r"```json\n(.*?)```"
-    match = re.search(pattern, text, re.DOTALL)
-    block = match.group(1).strip() if match else ""
+    matches = re.findall(pattern, text)
+    block = matches[-1].strip() if matches else ""
 
     data = json.loads(block)
 
     return data['changes_made']
 
 
-
 @app.command()
-def review(
-           repo_dir: str = typer.Option(None, "--repo-dir", "-r",
+def review(repo_dir: str = typer.Option(None, "--repo-dir", "-r",
                                         help="Location of where the"
                                              " repo is cloned."),
            output: str = typer.Option("output.txt", "--output", "-o",
@@ -264,7 +264,7 @@ def review(
                                            " formula file."),
            model: str = typer.Option("llama3", "--model", "-m",
                                      help="Name of model.")
-        ):
+           ):
     """Goes through your README.md and provides feedback."""
 
     if repo_dir is None:
@@ -309,9 +309,10 @@ Please do the following:
 
     console.print(Panel.fit(f"{results}",
                             title=f"Readme Review for \"{repo}\"",
-                            subtitle=f"LLM Powered Improvements by \"{model}\"",
+                            subtitle="LLM Powered Improvements by "
+                                     f"\"{model}\"",
                             style="cyan")
-                 )
+                  )
 
     # Start writing results to file.
     output_filepath = get_real_path(output)
@@ -326,16 +327,14 @@ Please do the following:
 
 @app.command()
 def generate_enhanced_report(
-                    repo_dir: str = typer.Option(None, "--repo-dir", "-r",
-                                                 help="Location of where the"
-                                                      " repo is cloned."),
-                    output: str = typer.Option("output.md", "--output", "-o",
-                                               help="Location of where to save"
-                                                    " formula file."),
-                    model: str = typer.Option("llama3", "--model", "-m",
-                                              help="Name of model.")
-        ):
-    """Generate ruby formula file from a cloned repo."""
+    repo_dir: str = typer.Option(None, "--repo-dir", "-r",
+                                 help="Location of where the repo is cloned."),
+    output: str = typer.Option("output_readme.md", "--output", "-o",
+                               help="Location of where to save"
+                                    " formula file."),
+    model: str = typer.Option("llama3", "--model", "-m", help="Name of model.")
+                             ):
+    """Uses LLM to generate an improved README file."""
 
     if repo_dir is None:
         sys.exit("You must specify a repo directory.")
@@ -352,11 +351,12 @@ def generate_enhanced_report(
     prompt = f"""
 You are an expert in open source documentation.
 
-Please improve the following README.md file with better formatting, clearer sectioning, and enhanced writing quality with a professional tone.
+Please improve the following README.md file with better formatting, clearer
+sectioning, and enhanced writing quality with a professional tone.
 
 Requirements:
 - Do not remove any existing GIFs, demo sections, or badge links.
-- Return the **entire updated README** in valid Markdown, ready to overwrite the current README.md file.
+- Return the **entire updated README** in valid Markdown.
 - Be verbose and explain in reasonable detail.
 At the end, include a JSON block exactly like this:
 
@@ -369,7 +369,6 @@ At the end, include a JSON block exactly like this:
   ]
 }}
 ```
-
 
 Format your response as:
 
@@ -397,8 +396,8 @@ The .git/config file looks like:
 ____
 {git_config_info}
 ____
-You don't have to do anything aobut git_config or folder_tree. Its there for you to get
-metadata. Please don't print it out to console.
+You don't have to do anything aobut git_config or folder_tree. Its there for
+you to get metadata. Please don't print it out to console.
 """
 
     results = send_prompt_to_LLM(prompt)
@@ -409,8 +408,10 @@ metadata. Please don't print it out to console.
     print()
     console.print(
                   Panel.fit(f"{pretty_changes}",
-                            title=f"[bold green]Changes Made for \"{repo}\"[/]",
-                            subtitle=f"[green]LLM Powered Improvements by \"{model}\"[/]",
+                            title="[bold green]Changes Made for"
+                                  f" \"{repo}\"[/]",
+                            subtitle="[green]LLM Powered Improvements by"
+                                     f" \"{model}\"[/]",
                             style="cyan")
                  )
 
@@ -420,7 +421,8 @@ metadata. Please don't print it out to console.
         f.write(readme_contents)
 
     print()
-    console.print("[bold yellow]WARNING: Please double-check since LLMs can make subtle mistakes.[/]")
+    console.print("[bold yellow]WARNING: Please double-check since"
+                  " LLMs can make still make mistakes.[/]")
     print()
     console.print(f"[bold cyan]Output saved to:[/] {output_filepath}")
 
