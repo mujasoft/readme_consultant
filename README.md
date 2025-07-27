@@ -6,7 +6,7 @@
 [![Demo](https://img.shields.io/badge/demo-available-blueviolet)](#🎬-demo)
 
 
-The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve and even rewrite your GitHub README.md files** which can greatly improve communication.
+The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve and even rewrite your GitHub README.md** which can greatly improve communication.
 
 ---
 
