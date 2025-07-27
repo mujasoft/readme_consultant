@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![LLM Powered](https://img.shields.io/badge/LLM-Ollama%20%2B%20Typer-informational)](https://ollama.ai)
-[![Demo](https://img.shields.io/badge/demo-available-blueviolet)](#🎬-demo)
+[![Demo](https://img.shields.io/badge/demo-available-blueviolet)]
 
 
 The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve and even rewrite your GitHub README.md** which can greatly improve communication.
