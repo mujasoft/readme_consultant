@@ -328,7 +328,7 @@ Please do the following:
     results = send_prompt_to_LLM(prompt, model)
 
     console.print(Panel.fit(f"{results}",
-                            title="[bold cyan]Changes Made for"
+                            title="[bold cyan]Review for"
                                   f" \"{repo}\"[/]",
                             subtitle="[cyan]LLM Powered Improvements by"
                                      f" \"{model}\"[/]",
