@@ -17,10 +17,10 @@ The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve
 
 ## Features
 
-- Reviews your `README.md` and gives structured feedback
-- Uses `Ollama` to run local LLMs like `llama3` so everything is offline
-- Can enahnce your README and return a fully rewritten version
-- Intuitive and easy to use
+- Reviews your `README.md` and gives structured feedback.
+- Uses `Ollama` to run local LLMs like `llama3` so everything is offline.
+- Able to generate an improved README from your existing one.
+- Intuitive and easy to use.
 
 ---
 
@@ -32,7 +32,7 @@ git clone https://github.com/mujasoft/readme_consultant.git
 cd readme_consultant
 
 # install dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 > Requires: Python 3.9+, `ollama` running locally and models like `llama3` downloaded.
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 ### Review Mode
 
-Get AI feedback on your current README:
+Get AI feedback on your current `README.md`:
 
 ```bash
 python3 readme_consultant.py review -r /path/to/your/repo -o output.txt
@@ -105,9 +105,13 @@ Review your readme
 │ audience.
 <contd>
 ```
+---
+## Limitations
+- LLMs can still make mistakes and/or hallucinate.
+- User's repository must have an existing `README.md` file.
+- Currently only tested on MacOS and on a M1 Macbook Pro with 16GB RAM.
 
 ---
-
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
