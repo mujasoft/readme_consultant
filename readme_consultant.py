@@ -327,7 +327,7 @@ Please do the following:
 
 
 @app.command()
-def generate_enhanced_report(
+def generate_enhanced_readme(
     repo_dir: str = typer.Option(None, "--repo-dir", "-r",
                                  help="Location of where the repo is cloned."),
     output: str = typer.Option("output_readme.md", "--output", "-o",
