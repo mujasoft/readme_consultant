@@ -13,7 +13,7 @@
 - Reviews your `README.md` and gives structured feedback
 - Uses `Ollama` to run local LLMs like `llama3` so everything is offline
 - Can enahnce your README and return a fully rewritten version
-- Pretty CLI panels with `rich` and flexible `Typer` CLI options
+- Intuitive and easy to use
 
 ---
 
