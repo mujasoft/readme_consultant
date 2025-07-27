@@ -241,10 +241,13 @@ def extract_markdown_block(text: str) -> str:
 
 
 def extract_changes_made_block(text: str) -> list:
-    """
-    Extracts the first changes made from a string.
+    """Extracts changes made by the LLM as a list.
 
-    Returns the markdown code as a string.
+    Args:
+        text (str): output from LLM.
+
+    Returns:
+        list: Changes made by LLM.
     """
 
     pattern = r"```json\n(.*?)```"
