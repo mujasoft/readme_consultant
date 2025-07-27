@@ -202,6 +202,7 @@ def send_prompt_to_LLM(prompt: str, model: str = "llama3") -> str:
 
 def extract_json_block(text: str) -> dict:
     """Extracts last JSON code block from a string and returns it as a dict."""
+
     pattern = r"```json\s*({.*?})\s*```"
     match = re.search(pattern, text, re.DOTALL)
 
@@ -263,13 +264,13 @@ def validate_setup(repo_dir):
     """
 
     if repo_dir is None:
-        sys.exit("You must specify a repo directory.")
+        sys.exit("ERROR: You must specify a repo directory.")
 
     if not os.path.exists(repo_dir):
-        sys.exit(f"\"{repo_dir}\"does not exist.")
+        sys.exit(f"ERROR: \"{repo_dir}\" does not exist.")
 
     if not os.path.exists(os.path.join(repo_dir, "README.md")):
-        sys.exit("Please ensure there is a README.md in your repo.")
+        sys.exit("ERROR: Please ensure there is a README.md in your repo.")
 
 
 @app.command()
@@ -321,7 +322,7 @@ Please do the following:
 - mention best open source practices.
 """
 
-    results = send_prompt_to_LLM(prompt)
+    results = send_prompt_to_LLM(prompt, model)
 
     console.print(Panel.fit(f"{results}",
                             title="[bold cyan]Changes Made for"
@@ -339,7 +340,8 @@ Please do the following:
         f.write(results)
 
     print()
-    console.print("[bold yellow]WARNING: LLMs can still make mistakes[/]")
+    console.print("[bold yellow]WARNING: Please double-check since"
+                  " LLMs can make still make mistakes.[/]")
 
 
 @app.command()
@@ -384,8 +386,7 @@ Format your response as:
 
 ```
 
-At the end, include a JSON block exactly like this:
-
+At the end, include the JSON block inside a triple backtick block labeled json:
 ```json
 {{
   "changes_made": [
@@ -394,7 +395,6 @@ At the end, include a JSON block exactly like this:
     "Added demo screenshot to Features section"
   ]
 }}
-```
 
 This will allow me to extract the README and track improvements separately.
 
@@ -415,7 +415,7 @@ ____
 Do not print git config info.
 """
 
-    results = send_prompt_to_LLM(prompt)
+    results = send_prompt_to_LLM(prompt, model)
     readme_contents = extract_markdown_block(results)
     changes_made = extract_changes_made_block(results)
 
