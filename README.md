@@ -8,6 +8,11 @@
 
 ---
 
+## Demo
+
+![Demo](demo.gif)
+---
+
 ## Features
 
 - Reviews your `README.md` and gives structured feedback
