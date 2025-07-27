@@ -3,8 +3,10 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![LLM Powered](https://img.shields.io/badge/LLM-Ollama%20%2B%20Typer-informational)](https://ollama.ai)
+[![Demo](https://img.shields.io/badge/demo-available-blueviolet)](#🎬-demo)
 
-`readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve, and rewrite your GitHub README.md files** with professional tone, open-source best practices and formatting polish.
+
+The `readme_consultant` is a CLI tool that uses local LLMs to **analyze, improve and even rewrite your GitHub README.md files** which can greatly improve communication.
 
 ---
 
@@ -22,7 +24,7 @@
 
 ---
 
-## Installation
+## Setup
 
 ```bash
 # clone the repo
@@ -44,7 +46,7 @@ pip install -r requirements.txt
 Get AI feedback on your current README:
 
 ```bash
-python readme_consultant.py review -r /path/to/your/repo -o output.txt
+python3 readme_consultant.py review -r /path/to/your/repo -o output.txt
 ```
 
 ### Enhanced README Generation
@@ -52,7 +54,7 @@ python readme_consultant.py review -r /path/to/your/repo -o output.txt
 Generate a rewritten, improved `README.md`:
 
 ```bash
-python readme_consultant.py generate-enhanced-readme -r /path/to/your/repo -o output_readme.md
+python3 readme_consultant.py generate-enhanced-readme -r /path/to/your/repo -o output_readme.md
 ```
 
 ---
@@ -110,9 +112,4 @@ Review your readme
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
----
 
-## Want to Help?
-
-Pull requests, feedback and stars welcome!
-Or use it in your own GitHub projects and generate better READMEs with zero effort.
